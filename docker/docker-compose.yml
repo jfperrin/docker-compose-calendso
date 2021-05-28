@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+    postgres:
+        container_name: postgres
+        image: postgres
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            PGDATA: /data/postgres
+        volumes:
+            - ../datas/postgres:/data/postgres
+        ports:
+            - "5432:5432"
+        networks:
+            - calendso_bridge
+        restart: unless-stopped
+    
+    pgadmin:
+        container_name: pgadmin
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+            PGADMIN_CONFIG_SERVER_MODE: 'False'
+        volumes:
+            - ../datas/pgadmin:/root/.pgadmin
+        ports:
+            - "${PGADMIN_PORT:-5050}:80"
+        networks:
+            - calendso_bridge
+        restart: unless-stopped
+    
+    calendso:
+        container_name: calendso
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+            - "5555:5555"
+        networks:
+            - calendso_bridge
+        depends_on:
+            - "postgres"
+
+
+networks:
+    calendso_bridge:
+        driver: bridge
