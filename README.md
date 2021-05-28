@@ -13,11 +13,11 @@ git clone https://github.com/jfperrin/docker-compose-calendso.git
 
 ### Set up the enviroment
 
-in the `docker` directory copy .env.example to .env and replace <user>, <pass>,<pg-admin-email>,<pg-admin-pass>, <pg-admin-port> and <google-api-secret> with their applicable values
+in the `docker` directory copy .env.example to .env and replace `<user>`, `<pass>`, `<pg-admin-email>`, `<pg-admin-pass>`, `<pg-admin-port>` and `<google-api-secret>` with their applicable values
 
 ### Launch 
 
-```docker-compose up -d```
+Still in the `docker` directory execute `docker-compose up -d`
 
 ### Create user
 
